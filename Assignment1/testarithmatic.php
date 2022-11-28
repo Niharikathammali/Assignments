@@ -12,7 +12,7 @@
     $C=$x*$y;
 
 
-    echo "Adition = $A \n\n";
+    echo "Addition = $A \n\n";
    
     echo "Substraction = $B \n\n";
     
@@ -27,7 +27,7 @@
   }
       catch(Exception $e){
        
-        echo "Exception: ", $e->getMessage();
+        echo "Division = ", $e->getMessage();
       }
 
 ?>
