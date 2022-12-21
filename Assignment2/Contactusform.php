@@ -3,72 +3,96 @@
 <head>
 <style>
 .error {color: #FF0000;}
-/* Style inputs with type="text", select elements and textareas */
-input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+
+.elem-group{
+	align-items:center;
+	display:grid;
+    grid-template-columns: 1fr 2fr;
+   
+ 
 }
 
-/* Style the submit button with a specific background color etc */
-input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+.form{
+	width:100%;
+    padding-right:10px;
+    
 }
+.table, {
+  border: 0px solid;
+}
+	
 
-/* When moving the mouse over the submit button, add a darker green color */
-input[type=submit]:hover {
-  background-color: #45a049;
-}
+		body {
+			background: #ffffff;
+            
+            margin: 8px;
+		}
 
-/* Add a background color and some padding around the form */
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-}
+		form {
+			max-width: 420px;
+			margin: 50px auto;
+		}
+        
+        
+		
+        
+		textarea {
+			height: 150px;
+			line-height: 150%;
+			resize: grid;
+		}
+
+		
+        
+		[type="submit"] {
+			font-family: sans-serif;
+			width: 25%;
+			background-color:MediumSeaGreen;
+			border-radius: 5px;
+			border: 0;
+			cursor: pointer;
+			color: white;
+			font-size: 22px;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			transition: all 0.3s;
+			margin-top: 2px;
+			font-weight: 700;
+		}
+
+		[type="submit"]:hover {
+			background: #993333;
+		}
+
+		.caption-style-1 {
+			margin: auto;
+			list-style-type: none;
+			padding: 0px;
+		}
 </style>
-
-<title>
-	PHP Forms - Validate E-mail and URL
-</title>
-</head>
-<body style="background-color:#1c87c9;">
-
 <?php
-// define variables and set to empty values
+$first_name = $last_name = $phone = $birthdate = $email = $message = "";
 $nameErr = $emailErr =  $phoneErr = $birthdateErr = "" ;
-$firstname = $lastname = $email = $phone = $birthdate = $message = "";
-
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-   if (empty($_POST["firstname"]))
+   if (empty($_POST["first_name"]))
      {$nameErr = "Name is required";}
    else
      {
-     $firstname = test_input($_POST["firstname"]);
+     $first_name = test_input($_POST["first_name"]);
      // check if name only contains letters and whitespace
-     if (!preg_match("/^[a-zA-Z ]*$/",$firstname))
+     if (!preg_match("/^[a-zA-Z ]*$/",$first_name))
        {
        $nameErr = "Only letters and white space allowed";
        }
      }
-	  if (empty($_POST["lastname"]))
+	  if (empty($_POST["last_name"]))
      {$nameErr = "Name is required";}
    else
      {
-     $lastname = test_input($_POST["lastname"]);
+     $last_name = test_input($_POST["last_name"]);
      // check if name only contains letters and whitespace
-     if (!preg_match("/^[a-zA-Z ]*$/",$lastname))
+     if (!preg_match("/^[a-zA-Z ]*$/",$last_name))
        {
        $nameErr = "Only letters and white space allowed";
        }
@@ -115,85 +139,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
 }
 
-function test_input($data)
-{
-     $data = trim($data);
-     $data = stripslashes($data);
-     $data = htmlspecialchars($data);
-     return $data;
-}
 ?>
 
-<h2>Contact Form</h2>
-<!--<p><span class="error">* required field.</span></p>-->
+<center>
+<H1> Contact Form </H1>
+</center>
+<p><span class="error"></span></p>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-    <lable for="fname">First Name:<span class="error">*</span></lable>
-    <input type="text" name="firstname" placeholder="Your first name..">
-   <span class="error"><?php echo $nameErr;?></span>
+<form action="test2.php" method="post">
+  <div class="elem-group">
+    <label for="First Name">First Name:<span class="error">*</span></label>
+    <input type="text" id="name" name="first_name" placeholder="Your first_name" pattern=[A-Z\sa-z]{3,20} >
+    <span class="error"><?php echo $nameErr;?></span> 
+  </div><br>
 
-   <label for="lname">Last Name:</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name.."><br><br>
-	 
-   
-   <label for="phone">Mobile:<span class="error">*</label>
-    <input type="tel" id="phone" name="phone" placeholder="10 digit number" >
-	<span class="error"><?php echo $phoneErr;?></span>
-   
-   
-   <label for="birthdate">Birthdate:<span class="error">*   </label>
-    <input type="date" id="birthdate" name="birthdate" >
-	<span class="error"><?php echo $birthdateErr;?></span><br><br>
-	
-    
-   <label for="email">Email: <span class="error">*  </label>
-    <input type="text" placeholder="Enter Email" name="email" id="email" >
-   <span class="error"><?php echo $emailErr;?></span><br><br>
-   
-   <tr>
-   <label for="message">Message:
-    <textarea name="textarea" rows="5" cols="70"></textarea>
-    
-    <br><br>
-   </tr>
-   
-   <input type="submit" name="submit" value="Submit">
-   
-	<input type="button" name="return" value="Return" onClick="javascript:history.go(-1)" />
+  <div class="elem-group">
+    <label for="Last Name">Last Name:</label>
+    <input type="text" id="name" name="last_name" placeholder="Your last_name">
+  </div><br>
 
+  <div class="elem-group">
+    <label for="Mobile">Mobile Number:<span class="error">*</span></label>
+    <input type="tel" id="phone" name="phone" placeholder="Your contact number">
+    <span class="error"><?php echo $phoneErr;?></span>
+  </div><br>
+
+  <div class="elem-group">
+    <label for="birthdate">Birthdate:<span class="error">*</span></label>
+    <input type="date" id="birthdate" name="birthdate">
+    <span class="error"><?php echo $birthdateErr;?></span>
+  </div><br>
+
+  <div class="elem-group">
+    <label for="email">Mail:<span class="error">*</span></label>
+    <input type="email" id="email" name="email"  placeholder="Your email" >
+    <span class="error"><?php echo $emailErr;?></span>
+  </div><br>
+  
+  <div class="elem-group">
+    <label for="Message">Message:</label>
+    <textarea id="message" name="message" placeholder="Say whatever you want.."></textarea>
+  </div>
+  <input type="submit" name="submit" value="Submit">
+   
+  <input type="submit" name="return" value="Return" onClick="javascript:history.go(-1)" \>
 </form>
-
-
-<?php
-echo "<h2>Your Input:</h2>";
-echo "Hello" .$firstname.' '.$lastname;
-echo "<br>";
-echo "Birthdate:" .$birthdate;
-print_r(date('d-m',strtotime($birthdate)));
-if(date('d-m',strtotime($birthdate))==date('d-m')){
-
-        echo "Today is your birthday " .$birthdate.PHP_EOL;
-
-        echo "Happy Birthday $firstname $lastname";
-
-        echo "</br>";
-
-      }
-
-      else{
-
-        echo " Wrong date of birth";
-
-      }
-     
-/*echo $birthdate;*/
-echo "<br>";
-echo "Email:" .$email;
-echo "<br>";
-echo "Phone:" .$phone;
-echo "<br>";
-echo "Message:" .$message;
-?>
+    
 </body>
 </html>
 
