@@ -1,19 +1,32 @@
 <?php
   
-if($_POST) {
+  if($_POST) {
     $first_name = "";
     $last_name= "";
     $phone= "";
     $birthdate= "";
     $email= "";
     $message = "";
+     $fileName = "";
+    $fileUpload = "";
+    $fileSize = "";
+    $fileType ="";
     $email_body = "<div>";
     $nameErr = "";
     $emailErr = "";
     $phoneErr = "";
     $birthdateErr = "";
+    $name = $_FILES["file"]["name"];
+  
+    // Store the file extension or type
+    $type = $_FILES["file"]["type"];
+  
+    // Store the file size
+    $size = $_FILES["file"]["size"];
+  }
 
-}
+
+
     if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
    if (empty($_POST["first_name"]))
@@ -57,7 +70,7 @@ if($_POST) {
    else
      {
      $phone = test_input($_POST["phone"]);
-     // check if e-mail address syntax is valid
+     
      if (!preg_match("/^\d{9}$/",$phone))
        {
        $phoneErr = "Invalid Phone Number ";
@@ -78,7 +91,11 @@ if($_POST) {
    else
      {$message = test_input($_POST["message"]);}
 
+
+    
+
 }
+  
 
 function test_input($data)
 {
@@ -87,54 +104,6 @@ function test_input($data)
      $data = htmlspecialchars($data);
      return $data;
 }
-
-      /* if(isset($_POST['first_name'])) {
-        $first_name = filter_var($_POST['first_name'], FILTER_SANITIZE_STRING);
-        $email_body .= "<div>
-                           <label><b>First Name:</b></label>&nbsp;<span>".$first_name."</span>
-                        </div>";
-    }
-    if(isset($_POST['last_name'])) {
-        $last_name = filter_var($_POST['last_name'], FILTER_SANITIZE_STRING);
-        $email_body .= "<div>
-                           <label><b>Last Name:</b></label>&nbsp;<span>".$last_name."</span>
-                        </div>";
-    }
- 
-    if(isset($_POST['phone'])) {
-        $phone = filter_var($_POST['phone'], FILTER_SANITIZE_STRING);
-        $email_body .= "<div>
-                           <label><b>Mobile:</b></label>&nbsp;<span>".$phone."</span>
-                        </div>";
-    }
-    if(isset($_POST['email'])) {
-        $email = str_replace(array("\r", "\n", "%0a", "%0d"), '', $_POST['email']);
-        $email = filter_var($email, FILTER_VALIDATE_EMAIL);
-        $email_body .= "<div>
-                           <label><b>Visitor Email:</b></label>&nbsp;<span>".$email."</span>
-                        </div>";
-    }
-      
-   
-    }
-      
-    if(isset($_POST['message'])) {
-        $message = htmlspecialchars($_POST['message']);
-        $email_body .= "<div>
-                           <label><b>Visitor Message:</b></label>
-                           <div>".$message."</div>
-                        </div>";
-    }
-      
-      
-    function test_input($data)
-    {
-         $data = trim($data);
-         $data = stripslashes($data);
-         $data = htmlspecialchars($data);
-         return $data;
-    }*/
-    
         
         
         echo "Hello" .$first_name.' '.$last_name;
@@ -168,6 +137,14 @@ function test_input($data)
         echo "<br>";
         echo "Message:" .$message;
         echo "<br>";
+        echo "File actual name is $name"."<br>";
+        echo "File has .$type extension" . "<br>";
+        echo "File has $size of size"."<br>";
+            
+          
+        
  
 ?>
  <input type="submit" name="return" value="Return" onClick="javascript:history.go(-1)" \>
+            
+          

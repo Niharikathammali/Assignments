@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
    else
      {
      $phone = test_input($_POST["phone"]);
-     // check if e-mail address syntax is valid
+     
      if (!preg_match("/^\d{9}$/",$phone))
        {
        $phoneErr = "Invalid Phone Number ";
@@ -136,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
      {$message = "";}
    else
      {$message = test_input($_POST["message"]);}
+     
 
 }
 
@@ -146,7 +147,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 </center>
 <p><span class="error"></span></p>
 
-<form action="test2.php" method="post">
+<form action="test2.php" method="post" enctype="multipart/form-data">
   <div class="elem-group">
     <label for="First Name">First Name:<span class="error">*</span></label>
     <input type="text" id="name" name="first_name" placeholder="Your first_name" pattern=[A-Z\sa-z]{3,20} required>
@@ -180,9 +181,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     <label for="Message">Message:</label>
     <textarea id="message" name="message" placeholder="Say whatever you want.."></textarea>
   </div>
+  
+ 
+
+    <div>
+        Select file to upload:
+        <input type="file" name="file"><br>
+        
+
+    </div>
+
+    
   <input type="submit" name="submit" value="Submit">
    
-  <input type="submit" name="return" value="Return" onClick="javascript:history.go(-1)" \>
+  
 </form>
     
 </body>
